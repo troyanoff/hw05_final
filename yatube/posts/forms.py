@@ -16,6 +16,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'text': forms.Textarea(attrs={'cols': 40, 'rows': 10}),
         }
+
         def clean_text(self):
             text = self.cleaned_data['text']
             if text is None:
