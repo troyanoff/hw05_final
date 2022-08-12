@@ -156,10 +156,13 @@ def profile(request, username):
     posts_count = Post.objects.filter(
         author=user
     ).count()
-    following = Follow.objects.filter(
-        user=request.user,
-        author=user
-    ).exists()
+    if request.user.is_authenticated:
+        following = Follow.objects.filter(
+            user=request.user,
+            author=user
+        ).exists()
+    else:
+        following = False
     context = {
         'page_obj': page_obj,
         'author': user,
@@ -178,7 +181,7 @@ def profile_follow(request, username):
         user=request.user,
         author=author
     ).exists()
-    if not following:
+    if not following and author != request.user:
         Follow.objects.create(
             user=request.user,
             author=author
