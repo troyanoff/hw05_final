@@ -1,7 +1,6 @@
 import shutil
 import tempfile
 
-from django.contrib.auth import get_user_model
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django import forms
@@ -11,12 +10,11 @@ from django.core.cache import cache
 
 from http import HTTPStatus
 
-from posts.models import Comment, Post, Group
+from posts.models import Comment, Post, Group, User
 from posts.constants import COUNT_POSTS_INDEX
 from posts.forms import CommentForm, PostForm
 from ..models import Follow
 
-User = get_user_model()
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 

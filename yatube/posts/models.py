@@ -8,7 +8,6 @@ User = get_user_model()
 
 class Follow(models.Model):
     """Определение модели системы подписок."""
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -29,7 +28,6 @@ class Follow(models.Model):
 
 class Group(models.Model):
     """Определение модели Group и ее полей."""
-
     title = models.CharField(
         max_length=200,
         verbose_name='Название группы',
@@ -46,13 +44,11 @@ class Group(models.Model):
 
     def __str__(self):
         """Вывод названия группы."""
-
         return self.title
 
 
 class Post(UniversalModel):
     """Определение модели Post и ее полей."""
-
     text = models.TextField(verbose_name='Текст публикации')
     author = models.ForeignKey(
         User,
@@ -81,13 +77,11 @@ class Post(UniversalModel):
 
     def __str__(self):
         """Вывод содержания поста."""
-
         return self.text[:15]
 
 
 class Comment(UniversalModel):
     """Определение подели комментариев."""
-
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

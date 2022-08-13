@@ -121,3 +121,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+NUMBER_POSTS_PAGE = 10
+
+CACHE_STORAGE_TIME = 20

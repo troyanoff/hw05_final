@@ -4,13 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 
 from .models import Follow, Group, Post, User
-from . import constants
+from yatube.settings import NUMBER_POSTS_PAGE, CACHE_STORAGE_TIME
 from .forms import CommentForm, PostForm
 
 
 def _paginator(request, obj):
     """Возвращает page_obj"""
-    paginator = Paginator(obj, constants.COUNT_POSTS_INDEX)
+    paginator = Paginator(obj, NUMBER_POSTS_PAGE)
     page_number = request.GET.get('page')
     return paginator.get_page(page_number)
 
@@ -60,7 +60,7 @@ def group_posts(request, slug):
     return render(request, template, context)
 
 
-@cache_page(20)
+@cache_page(CACHE_STORAGE_TIME)
 def index(request):
     """Настройка отображения главной страницы."""
     posts = Post.objects.select_related(
@@ -99,13 +99,10 @@ def post_detail(request, post_id):
     post_comments = post.comments.select_related(
         'author',
     ).all()
-    user = User.objects.get(
-        username=post.author
-    )
-    posts_count = user.posts.count()
+    posts_count = post.author.posts.count()
     form = CommentForm()
     context = {
-        'author_post': user,
+        'author_post': post.author,
         'form': form,
         'post': post,
         'post_comments': post_comments,
@@ -153,16 +150,11 @@ def profile(request, username):
         'group',
     ).all()
     page_obj = _paginator(request, posts)
-    posts_count = Post.objects.filter(
+    posts_count = user.posts.count()
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user,
         author=user
-    ).count()
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user=request.user,
-            author=user
-        ).exists()
-    else:
-        following = False
+    ).exists()
     context = {
         'page_obj': page_obj,
         'author': user,
@@ -193,9 +185,14 @@ def profile_follow(request, username):
 @login_required
 def profile_unfollow(request, username):
     author = get_object_or_404(User, username=username)
-    Follow.objects.filter(
+    control = Follow.objects.filter(
         user=request.user,
         author=author
-    ).delete()
+    ).exists()
+    if control:
+        Follow.objects.filter(
+            user=request.user,
+            author=author
+        ).delete()
 
     return redirect('posts:profile', username)
