@@ -13,8 +13,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '[::1]',
     'testserver',
-    'www.Troyanoff.pythonanywhere.com',
-    'Troyanoff.pythonanywhere.com',
+    'www.troyanov.pythonanywhere.com',
+    'troyanov.pythonanywhere.com',
 ]
 
 INTERNAL_IPS = [
