@@ -60,16 +60,19 @@ def group_posts(request, slug):
     return render(request, template, context)
 
 
-@cache_page(CACHE_STORAGE_TIME)
+@cache_page(CACHE_STORAGE_TIME, key_prefix='index_page')
 def index(request):
     """Настройка отображения главной страницы."""
     posts = Post.objects.select_related(
         'author',
         'group',
     ).all()
-    page_obj = _paginator(request, posts)
+    paginator = Paginator(posts, NUMBER_POSTS_PAGE)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
+        'page_number': page_number,
     }
     template = 'posts/index.html'
 

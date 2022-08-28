@@ -3,20 +3,38 @@
 {% block title %}Технологии{% endblock %}
 
 {% block content %}
-<div class="row">
-  <h1>Вот что я умею</h1>
-  <aside class="col-12 col-md-3">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        Python
-      </li>
-      <li class="list-group-item">
-        Django
-      </li>
-    </ul>
-  </aside>
-  <article class="col-12 col-md-9">
-    <p>Текст страницы "Технологии"</p>
-  </article>
-</div>
+  <div class="container mb-5">
+    <div class="row">
+      <h1 class="mt-5">Вот что я использовал в проекте</h1>
+      <aside class="col-3 col-md-3">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Python
+          </li>
+          <li class="list-group-item">
+            Django
+          </li>
+          <li class="list-group-item">
+            HTML и CSS
+          </li>
+          <li class="list-group-item">
+            SQL
+          </li>
+        </ul>
+      </aside>
+      <article class="col-9 col-md-6">
+        <p class="lead">
+          Это мой первый серьезный и полноценный проект.
+          Он получился достаточно функциональным для того, чтобы я им гордился.
+        </p>
+        <p class="lead">
+          Это социльная сеть с возможностью делиться своими мыслями и фотографиями.
+          Есть возможность создавать и редактировать посты.
+          Вы даже можете оставить свой комментарий к понравившемуся посту.
+          А если другой пользователь достоин того, чтобы читать все его посты, можно
+          подписаться на него и отписаться, когда надоест.
+        </p>
+      </article>
+    </div>
+  </div>
 {% endblock %}
